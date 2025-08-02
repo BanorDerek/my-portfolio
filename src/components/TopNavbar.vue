@@ -1,8 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import ThemeToggle from './ThemeToggle.vue';
-import logoImage from '../assets/DareDev-Logo1.png'; // 1. IMPORT YOUR LOGO HERE (adjust the path if needed)
+import ThemeToggle from './ThemeToggle.vue'; // Import the toggle component
 
 const isMenuOpen = ref(false);
 
@@ -36,10 +35,7 @@ const getLinkUrl = (href) => {
 
 <template>
   <nav class="top-navbar">
-    <!-- 2. REPLACE THE TEXT DIV WITH A CLICKABLE LOGO IMAGE -->
-    <router-link to="/" class="logo-link">
-      <img :src="logoImage" alt="DareDev Logo" class="logo-image" />
-    </router-link>
+    <div class="logo">DareDev</div>
 
     <button @click="toggleMenu" class="hamburger-menu" :class="{ 'is-active': isMenuOpen }" aria-label="Toggle menu">
       <span></span>
@@ -51,6 +47,7 @@ const getLinkUrl = (href) => {
       <li v-for="link in navLinks" :key="link.text">
         <a :href="getLinkUrl(link.href)" @click="closeMenu">{{ link.text }}</a>
       </li>
+      <!-- Add the theme toggle as the last item in the list -->
       <li class="theme-toggle-container">
         <ThemeToggle />
       </li>
@@ -67,28 +64,24 @@ const getLinkUrl = (href) => {
   z-index: 1000;
   width: 80%;
   max-width: 1100px;
+  /* Use CSS variables for colors */
   background-color: var(--nav-bg);
   box-shadow: 0 4px 15px var(--shadow-color);
-  /* Adjust padding slightly to accommodate logo height */
-  padding: 10px 30px; 
+  padding: 15px 30px;
   border-radius: 12px;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px); /* Nice glassy effect */
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* 3. UPDATE THE CSS TO STYLE THE IMAGE LOGO */
-.logo-link {
-  display: flex;
-  align-items: center;
-}
-
-.logo-image {
-  height: 40px; /* Adjust this value to fit your logo's proportions */
-  width: auto; /* Maintain aspect ratio */
+.logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: var(--text-color-primary);
+  transition: color 0.3s ease;
 }
 
 .nav-links {
@@ -96,7 +89,7 @@ const getLinkUrl = (href) => {
   margin: 0;
   padding: 0;
   display: flex;
-  align-items: center;
+  align-items: center; /* Vertically align items */
   gap: 25px;
 }
 
@@ -155,7 +148,7 @@ const getLinkUrl = (href) => {
     right: 0;
     width: 280px;
     height: 100vh;
-    background-color: var(--card-bg);
+    background-color: var(--card-bg); /* Use card background for the panel */
     flex-direction: column;
     justify-content: center;
     align-items: center;
