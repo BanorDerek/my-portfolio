@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Derek Banor - Portfolio</title>
+    
+    <!-- 
+      NEW: Add the PrismJS CSS theme directly from a CDN.
+      This completely bypasses the failing import in main.js.
+    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" integrity="sha512-vswe+cgvic/XBoF1OcM/TeJ2FW0OofqAVdCZiEYkd6dwGXthvkTTjpzCVwSodkeHSAmd7AWvHMsBgEgRy5SoIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <!-- 
+      NEW: Add the PrismJS core JavaScript file here.
+      The 'defer' attribute is important - it waits for the HTML to load.
+    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9acCRHqA+UkytIZgKM322fNwdErKhxclLunvsxB1OyMYm/goiLppVkUU75DOdGDDYjL/3T4K4ABFd5DAn4iA==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+    
+    <!-- 
+      NEW: Add the languages you need. 
+      You MUST load the core script first, then the languages.
+    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js" defer></script>
+    <!-- Add more languages from the CDN as needed -->
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
