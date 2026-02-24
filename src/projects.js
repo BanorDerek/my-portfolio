@@ -24,6 +24,13 @@ export const projects = [
       new URL('/src/assets/projectimage/bluetidy1.png', import.meta.url).href,
       new URL('/src/assets/projectimage/bluetidy2.png', import.meta.url).href,
       new URL('/src/assets/projectimage/bluetidy3.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/bluetidy4.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/bluetidy5.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/bluetidy6.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/bluetidy7.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/bluetidy8.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/bluetidy9.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/bluetidy10.png', import.meta.url).href,
     ],
     fullDescription: [
       { type: 'paragraph', content: "Bluetidy is a mobile platform that transforms cleaning operations into a smooth, automated system, creating a seamless connection between property hosts and cleaners. With Bluetidy, property hosts can schedule cleaning jobs, list them for cleaners to bid on, select their preferred cleaner, negotiate bids, and finalize schedules upon mutual acceptance." },
@@ -71,6 +78,11 @@ export const projects = [
       new URL('/src/assets/projectimage/givetech1.png', import.meta.url).href,
       new URL('/src/assets/projectimage/givetech2.png', import.meta.url).href,
       new URL('/src/assets/projectimage/givetech3.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/givetech4.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/givetech5.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/givetech6.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/givetech7.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/givetech8.png', import.meta.url).href,
     ],
     fullDescription: [
       { type: 'paragraph', content: "Give Tech to the Blind is a platform that connects donors with visually impaired recipients to provide essential assistive technology. Since its soft launch, the platform has already connected donors with recipients, with the first batch of tech requests being fulfilled." },
@@ -109,10 +121,12 @@ export const projects = [
       frontend: ['React', 'JavaScript (ES6+)'],
     },
     description: 'A static React website for an interior decor client, showcasing their portfolio and design services.',
-    liveLink: '#', // Add when available
+    liveLink: 'https://aadesign-murex.vercel.app', // Add when available
     githubLink: '#',
     galleryImages: [
       new URL('/src/assets/projectimage/aadesign1.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/aadesign2.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/aadesign3.png', import.meta.url).href,
     ],
     fullDescription: [
       { type: 'paragraph', content: "AA Design is a static React website built for an interior decor client to showcase their portfolio and design services. The website presents their work in a clean, visually appealing format that highlights their design aesthetic and project portfolio." },
@@ -226,13 +240,16 @@ export const projects = [
     liveLink: 'https://accesstechacademy.com',
     githubLink: '#',
     galleryImages: [
-      new URL('/src/assets/projectimage/project3.2.png', import.meta.url).href,
-      new URL('/src/assets/projectimage/project3.3.png', import.meta.url).href,
-      new URL('/src/assets/projectimage/project3.4.png', import.meta.url).href,
-      new URL('/src/assets/projectimage/project3.5.png', import.meta.url).href,
-      new URL('/src/assets/projectimage/project3.6.png', import.meta.url).href,
-      new URL('/src/assets/projectimage/project3.7.png', import.meta.url).href,
-      new URL('/src/assets/projectimage/project3.8.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/atacad1.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/atacad2.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/atacad3.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/atacad4.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/atacad5.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/atacad6.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/atacad7.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/atacad8.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/atacad9.png', import.meta.url).href,
+      
     ],
     fullDescription: [
       { type: 'paragraph', content: "AccessTech Academy is a full-stack, database-driven e-learning platform built with PHP, MySQL, and vanilla JavaScript, specifically engineered to provide an inclusive educational experience for users with visual impairments. The platform's core principle is 'Accessibility First', enforced from the moment a user visits." },
