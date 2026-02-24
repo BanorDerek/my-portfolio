@@ -229,41 +229,261 @@ export const projects = [
     ]
   },
 
-  // --- EXISTING PROJECT: AccessTech Academy ---
-  {
-    type: 'completed',
-    slug: 'accesstech-academy',
-    title: 'AccessTech Academy - An Accessible E-Learning Platform',
-    image: new URL('/src/assets/projectimage/project3.1.png', import.meta.url).href,
-    stack: { frontend: ['HTML5', 'CSS3', 'Vanilla JavaScript (ES6+)'], backend: ['PHP'], database: ['MySQL'], apis_libraries: ['Google reCAPTCHA v3'] },
-    description: 'A full-stack e-learning platform engineered for accessibility, featuring a user-centric theme/font-size selector, secure registration, and a stateful quizzing system.',
-    liveLink: 'https://accesstechacademy.com',
-    githubLink: '#',
-    galleryImages: [
-      new URL('/src/assets/projectimage/atacad1.png', import.meta.url).href,
-      new URL('/src/assets/projectimage/atacad2.png', import.meta.url).href,
-      new URL('/src/assets/projectimage/atacad3.png', import.meta.url).href,
-      new URL('/src/assets/projectimage/atacad4.png', import.meta.url).href,
-      new URL('/src/assets/projectimage/atacad5.png', import.meta.url).href,
-      new URL('/src/assets/projectimage/atacad6.png', import.meta.url).href,
-      new URL('/src/assets/projectimage/atacad7.png', import.meta.url).href,
-      new URL('/src/assets/projectimage/atacad8.png', import.meta.url).href,
-      new URL('/src/assets/projectimage/atacad9.png', import.meta.url).href,
-      
-    ],
-    fullDescription: [
-      { type: 'paragraph', content: "AccessTech Academy is a full-stack, database-driven e-learning platform built with PHP, MySQL, and vanilla JavaScript, specifically engineered to provide an inclusive educational experience for users with visual impairments. The platform's core principle is 'Accessibility First', enforced from the moment a user visits." },
-      { type: 'paragraph', content: "A unique onboarding screen requires users to select their preferred contrast and font size before proceeding. These settings are then saved to the browser's localStorage, ensuring that their preferences are automatically applied on every subsequent page and visit, creating a consistently comfortable and accessible environment." },
-      { type: 'heading', content: 'Key Technical Features' },
-      { type: 'list', items: ['Secure User Authentication: A complete registration workflow featuring server-side validation, Google reCAPTCHA v3 bot detection, password hashing, and a 7-digit email verification process.', 'Dynamic Course Structure: The entire curriculum, including modules and lessons, is dynamically rendered from the MySQL database, allowing for easy content management.', 'Multi-Format Content Delivery: The lesson viewer intelligently handles and displays various content types, including text, embedded videos (YouTube/Vimeo), self-hosted media files, and an audio player with custom controls.', 'Stateful Quizzing System: A robust quiz module that securely manages user attempts, enforces business rules (e.g., attempt limits, passing scores), runs a timed session, and uses AJAX to save progress asynchronously, preventing data loss on page refresh.'] }
-    ],
-    codeSnippets: [
-      { title: "Frontend: Persistent Accessibility Controls", language: "javascript", code: `// Applies a theme by adding a class to the <body> tag.\nfunction applyTheme(themeValue) {\n    document.body.className = ''; // Clear existing theme classes\n    let themeClass = 'theme-light';\n    switch (themeValue) {\n        case 2: themeClass = 'theme-dark'; break;\n        case 3: themeClass = 'theme-hc-1'; break; // Black/Gold\n        case 4: themeClass = 'theme-hc-2'; break; // Blue/Gold\n    }\n    document.body.classList.add(themeClass);\n}\n\n// Sets the contrast, applies it, and saves the choice to localStorage.\nfunction setContrast(value) {\n    applyTheme(value);\n    localStorage.setItem('contrastTheme', value.toString());\n}\n\n// On every page load, retrieve and apply the user's saved preferences.\ndocument.addEventListener('DOMContentLoaded', function () {\n    // Get saved theme or default to 1 (light theme)\n    const savedTheme = parseInt(localStorage.getItem('contrastTheme'), 10) || 1;\n    applyTheme(savedTheme);\n    \n    // ... similar logic for font size ...\n});` },
-      { title: "Backend: Secure User Registration Flow", language: "php", code: `// --- (After form validation and reCAPTCHA check) ---\n\n// Check if username or email already exists using a prepared statement\n$sql_check = "SELECT user_name FROM users WHERE user_name = ? OR email = ?";\n$stmt_check = $conn->prepare($sql_check);\n$stmt_check->bind_param("ss", $user_name, $email);\n$stmt_check->execute();\nif ($stmt_check->get_result()->num_rows > 0) {\n    $errors[] = "Username or email is already taken.";\n}\n$stmt_check->close();\n\n// --- If no errors, proceed ---\nif (empty($errors)) {\n    // Generate a secure verification code and expiry time\n    $verification_code = (string) random_int(1000000, 9999999);\n    $expiry_time = time() + (15 * 60); // 15 minutes\n\n    // Hash the password securely\n    $password_hashed = password_hash($password_plain, PASSWORD_DEFAULT);\n\n    // Store pending user data in session, NOT in the database yet\n    $_SESSION['pending_verification'] = [\n        'email' => $email,\n        'user_name' => $user_name, \n        'password_hashed' => $password_hashed,\n        'code' => $verification_code,\n        'expiry_time' => $expiry_time\n    ];\n\n    // Send verification email and redirect to the 'verify.php' page\n    // ... mail() logic ...\n    header('Location: verify.php');\n    exit;\n}` },
-      { title: "Backend: Course Access Control (Authorization)", language: "php", code: `// --- (After user is logged in and course_id is validated) ---\n\n// 1. Fetch course details to check if it requires payment\n$sql_course = "SELECT id, is_paid FROM courses WHERE id = ? LIMIT 1";\n$stmt_course = $conn->prepare($sql_course);\n$stmt_course->bind_param("i", $course_id);\n$stmt_course->execute();\n$course = $stmt_course->get_result()->fetch_assoc();\n$stmt_course->close();\n\nif (!$course) { /* ... handle course not found ... */ }\n\n$is_paid_course = (bool)$course['is_paid'];\n$has_access = false; // Assume no access by default\n\n// 2. Determine authorization\nif (!$is_paid_course) {\n    // Grant access for free courses\n    $has_access = true;\n} else {\n    // For paid courses, check the user_enrollments table\n    $sql_enroll_check = "SELECT 1 FROM user_enrollments WHERE user_id = ? AND course_id = ? LIMIT 1";\n    $stmt_enroll_check = $conn->prepare($sql_enroll_check);\n    $stmt_enroll_check->bind_param("ii", $user_id, $course_id);\n    $stmt_enroll_check->execute();\n    if ($stmt_enroll_check->get_result()->num_rows > 0) {\n        $has_access = true; // Grant access if enrolled\n    }\n    $stmt_enroll_check->close();\n}\n\n// 3. Enforce the decision\nif (!$has_access) {\n    $_SESSION['error_message'] = "You are not enrolled in this course.";\n    header('Location: /courses/course_page.php?course_id=' . $course_id);\n    exit;\n}\n\n// --- If code execution continues, the user is authorized to view the lesson ---` }
-    ]
+  // --- EXISTING PROJECT: AccessTech Academy (UPDATED with new features) ---
+{
+  type: 'completed',
+  slug: 'accesstech-academy',
+  title: 'AccessTech Academy - An Accessible E-Learning Platform',
+  image: new URL('/src/assets/projectimage/atacad1.png', import.meta.url).href,
+  stack: { 
+    frontend: ['React.js', 'React Router DOM', 'CSS3', 'Context API'], 
+    backend: ['Node.js', 'Express.js'], 
+    database: ['PostgreSQL'], 
+    apis_libraries: ['Cloudflare Turnstile', 'AWS S3'],
+    auth: ['JWT', 'bcrypt', 'Google OAuth'],
+    features: ['Accessibility Wizard', 'Typing Tutor Game', 'Email Verification']
   },
+  description: 'A full-stack e-learning platform engineered for accessibility, featuring a user-friendly accessibility wizard, secure authentication with Cloudflare Turnstile, and a fully accessible typing tutor game.',
+  liveLink: 'https://accesstechacademy.com',
+  githubLink: '#',
+  galleryImages: [
+    new URL('/src/assets/projectimage/atacad1.png', import.meta.url).href,
+    new URL('/src/assets/projectimage/atacad2.png', import.meta.url).href,
+    new URL('/src/assets/projectimage/atacad3.png', import.meta.url).href,
+    new URL('/src/assets/projectimage/atacad4.png', import.meta.url).href,
+    new URL('/src/assets/projectimage/atacad5.png', import.meta.url).href,
+    new URL('/src/assets/projectimage/atacad6.png', import.meta.url).href,
+    new URL('/src/assets/projectimage/atacad7.png', import.meta.url).href,
+    new URL('/src/assets/projectimage/atacad8.png', import.meta.url).href,
+    new URL('/src/assets/projectimage/atacad9.png', import.meta.url).href,
+  ],
+  fullDescription: [
+    { type: 'paragraph', content: "AccessTech Academy is a full-stack, database-driven e-learning platform rebuilt with React and Node.js, specifically engineered to provide an inclusive educational experience for users with visual impairments. The platform's core principle is 'Accessibility First', enforced from the moment a user visits." },
+    { type: 'paragraph', content: "The revamped platform features a comprehensive accessibility system that includes an onboarding wizard for first-time visitors, a persistent accessibility menu accessible from any page, and a fully voice-guided typing tutor game to help users improve their keyboard skills." },
+    { type: 'heading', content: 'Key Technical Features' },
+    { type: 'list', items: [
+      'Accessibility Wizard: A first-time user experience that guides visitors through selecting their preferred contrast and font size settings with live previews before saving to localStorage',
+      'Persistent Accessibility Menu: A sticky widget available on all pages allowing users to adjust contrast (Default, High Contrast, Gold Contrast, Blue Contrast) and font size (Small, Medium, Large) at any time',
+      'Typing Tutor Game: A fully accessible typing practice game with voice guidance, three modes (letters/words), three difficulty levels, finger placement instructions, and real-time stats (WPM, accuracy, streak)',
+      'Unified Authentication System: A single AuthPage handling login, registration, email verification, and password reset with role-based access (Student/Lecturer)',
+      'Cloudflare Turnstile Integration: Bot protection without CAPTCHA challenges, improving accessibility while maintaining security',
+      'Email Verification Flow: 6-digit code verification with resend timer and automatic error scrolling for better UX',
+      'AWS S3 Integration: Secure storage for user-uploaded content and profile images',
+      'Comprehensive Routing: Lazy-loaded routes with Suspense for optimal performance across 20+ pages including courses, quizzes, certificates, and learning paths'
+    ]},
+    { type: 'heading', content: 'Accessibility First Design' },
+    { type: 'list', items: [
+      'Screen reader optimized with proper ARIA labels and semantic HTML',
+      'Keyboard navigable throughout with clear focus indicators',
+      'Voice guidance in Typing Tutor with screen reader pause notice to prevent voice conflicts',
+      'Multiple contrast options tested with WCAG guidelines',
+      'Adjustable font sizes that scale all UI elements proportionally',
+      'Persistent preferences saved to localStorage across sessions'
+    ]}
+  ],
+  codeSnippets: [
+    { 
+      title: "Accessibility Wizard: Live Preview System", 
+      language: "javascript", 
+      code: `// Live preview in Accessibility Wizard
+useEffect(() => {
+  const tempPreferences = {
+    contrast: selectedContrast,
+    fontSize: selectedFontSize
+  };
+  
+  // Remove existing theme classes
+  document.body.className = document.body.className
+    .split(' ')
+    .filter(className => !className.startsWith('contrast-') && !className.startsWith('font-size-'))
+    .join(' ');
+  
+  // Add new theme classes for preview
+  document.body.classList.add(\`contrast-\${selectedContrast}\`);
+  document.body.classList.add(\`font-size-\${selectedFontSize}\`);
+}, [selectedContrast, selectedFontSize]);
 
+const handleSave = () => {
+  saveUserPreferences({
+    contrast: selectedContrast,
+    fontSize: selectedFontSize
+  });
+  navigate('/home');
+};` 
+    },
+    { 
+      title: "Accessibility Menu: Persistent Settings Widget", 
+      language: "javascript", 
+      code: `// Sticky accessibility menu with contrast and font size options
+const AccessibilityMenu = () => {
+  const { preferences, saveUserPreferences } = useAccessibility();
+  const [isOpen, setIsOpen] = useState(false);
+  
+  const contrastOptions = [
+    { id: 'default', name: 'Default', label: 'White/Black' },
+    { id: 'high-contrast', name: 'High Contrast', label: 'Black/White' },
+    { id: 'gold-contrast', name: 'Gold Contrast', label: 'Black/Gold' },
+    { id: 'blue-contrast', name: 'Blue Contrast', label: 'Blue/Gold' }
+  ];
+
+  const fontSizeOptions = [
+    { id: 'small', name: 'Small' },
+    { id: 'medium', name: 'Medium' },
+    { id: 'large', name: 'Large' }
+  ];
+
+  return (
+    <div className="accessibility-widget">
+      <button
+        className={\`accessibility-toggle \${isOpen ? 'active' : ''}\`}
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label="Accessibility settings"
+      >
+        <img src={accessibilityIcon} alt="" className="accessibility-icon" />
+      </button>
+      
+      {isOpen && (
+        <div className="accessibility-panel" role="dialog">
+          <h3>Accessibility Settings</h3>
+          {/* Contrast and font size options */}
+        </div>
+      )}
+    </div>
+  );
+};` 
+    },
+    { 
+      title: "Typing Tutor: Voice-Guided Game with Screen Reader Notice", 
+      language: "javascript", 
+      code: `// Screen reader notice to prevent voice conflicts
+const [showScreenReaderNotice, setShowScreenReaderNotice] = useState(
+  localStorage.getItem('hideScreenReaderNotice') !== 'true'
+);
+
+const dismissScreenReaderNotice = useCallback(() => {
+  setShowScreenReaderNotice(false);
+  localStorage.setItem('hideScreenReaderNotice', 'true');
+}, []);
+
+// Voice guidance function
+const speak = useCallback((text, priority = 'normal') => {
+  if (!synthRef.current) return;
+  if (priority === 'high') {
+    synthRef.current.cancel();
+    isSpeakingRef.current = false;
+  }
+  // ... speech synthesis logic
+}, []);
+
+// Announce target to type
+const announceTarget = useCallback((target) => {
+  if (mode === 'letters') {
+    speak(\`Type \${getSpokenName(target)}\`, 'high');
+    const guide = fingerGuide[target];
+    if (guide) {
+      setTimeout(() => {
+        speak(\`\${guide.finger} finger. \${guide.homeRow ? 'Home row.' : 'Upper row.'}\`, 'normal');
+      }, 1500);
+    }
+  } else {
+    speak(\`Type the word \${target}\`, 'high');
+  }
+}, [mode, speak]);` 
+    },
+    { 
+      title: "Unified Auth Page with Cloudflare Turnstile", 
+      language: "javascript", 
+      code: `// Sign In form with Turnstile CAPTCHA
+const SignInForm = ({ onForgotPassword }) => {
+  const [turnstileToken, setTurnstileToken] = useState(null);
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!turnstileToken) {
+      setServerError('Please complete the CAPTCHA verification');
+      return;
+    }
+    
+    try {
+      const result = await login(formData.email, formData.password, turnstileToken);
+      if (result.success) {
+        navigate(from, { replace: true });
+      } else if (result.requiresVerification) {
+        navigate('/auth', { 
+          state: { 
+            verificationRequired: true,
+            email: result.email || formData.email,
+            defaultTab: 'signup'
+          }
+        });
+      }
+    } catch (error) {
+      setServerError(error.message);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* Form inputs */}
+      <div className="captcha-container">
+        <Turnstile
+          sitekey={process.env.REACT_APP_TURNSTILE_SITE_KEY}
+          onVerify={(token) => setTurnstileToken(token)}
+        />
+      </div>
+      <button type="submit" disabled={isLoading || !turnstileToken}>
+        Sign In
+      </button>
+    </form>
+  );
+};` 
+    },
+    { 
+      title: "Route Structure with Lazy Loading", 
+      language: "javascript", 
+      code: `// Lazy loaded routes for optimal performance
+const Home = lazy(() => import('../pages/Home'));
+const About = lazy(() => import('../pages/normal/About'));
+const CourseList = lazy(() => import('../pages/courses/CourseList'));
+const LearningPage = lazy(() => import('../components/LearningPage/LearningPage'));
+const QuizPage = lazy(() => import('../pages/quiz/QuizPage'));
+const TypingTutor = lazy(() => import('../pages/TypingTutor/TypingTutor'));
+
+const AppRoutes = () => {
+  return (
+    <Layout>
+      <Suspense fallback={<LoadingFallback />}>
+        <Routes>
+          {/* Normal Pages */}
+          <Route path="/home" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          
+          {/* Unified Auth */}
+          <Route path="/login" element={<Navigate to="/auth" replace />} />
+          <Route path="/register" element={<Navigate to="/auth" replace />} />
+          <Route path="/auth" element={<AuthPage />} />
+          
+          {/* Course Pages */}
+          <Route path="/courses" element={<CourseList />} />
+          <Route path="/courses/:slug" element={<CourseDetail />} />
+          <Route path="/learn/:courseSlug" element={<LearningPage />} />
+          
+          {/* Quiz Pages */}
+          <Route path="/learn/:courseSlug/quiz" element={<QuizPage />} />
+          
+          {/* Typing Tutor */}
+          <Route path="/typing-tutor" element={<TypingTutor />} />
+          <Route path="/learn/:courseId/typing-tutor" element={<TypingTutor />} />
+        </Routes>
+      </Suspense>
+    </Layout>
+  );
+};` 
+    }
+  ]
+},
   // --- EXISTING PROJECT: Visitor & Item Management System ---
   {
     type: 'completed',
