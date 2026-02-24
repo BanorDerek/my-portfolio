@@ -332,7 +332,44 @@ const downloadQuoteAsHTML = () => {
         <p>Generated on: ${new Date().toLocaleDateString()}</p>
         <p>Quote ID: WEB-${Date.now().toString().slice(-8)}</p>
       </div>
-      
+      <!-- Mobile App Notice (NEW SECTION) -->
+<div class="form-section highlight-section">
+  <h2>📱 Need a Mobile App?</h2>
+  <div class="mobile-app-notice">
+    <div class="notice-icon">📲</div>
+    <div class="notice-content">
+      <h3>Mobile App Development</h3>
+      <p class="notice-main">Mobile applications require a custom approach based on your specific needs, features, and platform requirements.</p>
+      <div class="notice-features">
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <span>iOS & Android (React Native)</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <span>Native performance</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <span>App Store deployment</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <span>Push notifications</span>
+        </div>
+      </div>
+      <div class="notice-cta">
+        <p class="cta-text">📞 <strong>Contact me to discuss your mobile app idea!</strong></p>
+        <button 
+          class="contact-mobile-btn"
+          @click="handleShowPhoneNumber"
+        >
+          Discuss Mobile App
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
       <div class="section">
         <h2 class="section-title">Customer Information</h2>
         <p><strong>Name:</strong> ${formData.customerName || 'Not provided'}</p>
@@ -1719,6 +1756,116 @@ h2 {
     flex-direction: column;
     gap: 1rem;
     text-align: center;
+  }
+}
+/* Mobile App Notice Styles */
+.highlight-section {
+  background: linear-gradient(135deg, #f6f9fc, #e3f2fd);
+  border-left: 5px solid #2196F3 !important;
+}
+
+.mobile-app-notice {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  padding: 1rem;
+  background: rgba(33, 150, 243, 0.05);
+  border-radius: 12px;
+}
+
+.notice-icon {
+  font-size: 3rem;
+  line-height: 1;
+  animation: bounce 2s infinite;
+}
+
+.notice-content {
+  flex: 1;
+}
+
+.notice-content h3 {
+  color: #1976D2;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.3rem;
+}
+
+.notice-main {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.notice-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.8rem;
+  margin: 1.2rem 0;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.feature-icon {
+  color: #4CAF50;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.notice-cta {
+  margin-top: 1.2rem;
+  padding-top: 1.2rem;
+  border-top: 2px dashed #2196F3;
+}
+
+.cta-text {
+  font-size: 1.1rem;
+  margin: 0 0 1rem 0;
+  color: #1976D2;
+}
+
+.contact-mobile-btn {
+  background: linear-gradient(135deg, #2196F3, #1976D2);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+}
+
+.contact-mobile-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .mobile-app-notice {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .notice-features {
+    grid-template-columns: 1fr;
+  }
+  
+  .feature-item {
+    justify-content: center;
   }
 }
 </style>

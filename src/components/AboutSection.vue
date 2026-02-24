@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-// --- Target numbers for the animation ---
-const targetExperience = 3;
-const targetCompleted = 5;
+// --- Target numbers for the animation (UPDATED) ---
+const targetExperience = 4;        // Changed from 3 to 4
+const targetCompleted = 8;         // Changed from 5 to 8 (or whatever your actual count is)
 const targetPending = 3;
 
 // --- Reactive refs to display the counting numbers ---
@@ -79,14 +79,14 @@ onMounted(() => {
         </div>
       </div>
 
-      <!-- Right Column: About Me Text -->
+      <!-- Right Column: About Me Text (UPDATED with cloud experience) -->
       <div class="text-column">
         <h2>About Me</h2>
         <p>
-          As a dedicated Full-Stack Developer with 3 years of hands-on experience, I thrive on turning complex problems into elegant, user-friendly solutions. I specialize in building robust mobile and web applications from the ground up, leveraging a powerful stack that includes React Native, Laravel, and AWS.
+          As a dedicated Full-Stack Developer and Cloud Architect with 4+ years of hands-on experience, I thrive on turning complex problems into elegant, user-friendly solutions. I specialize in building robust mobile and web applications from the ground up, leveraging a powerful stack that includes React Native, Vue.js, Laravel, and AWS cloud infrastructure.
         </p>
         <p>
-          I graduated with a degree in Information Technology at Methodist University Accra Ghana, where I built a strong foundation in software engineering principles. My passion lies not just in writing code, but in architecting scalable systems and creating seamless digital experiences. I am always eager to learn new technologies and take on challenging projects that push the boundaries of what's possible.
+          I graduated with a degree in Information Technology at Methodist University Accra Ghana, where I built a strong foundation in software engineering principles. My passion lies not just in writing code, but in architecting scalable cloud solutions on AWS—deploying web applications, setting up CI/CD pipelines, and ensuring high availability and security. I am always eager to learn new technologies and take on challenging projects that push the boundaries of what's possible.
         </p>
       </div>
 

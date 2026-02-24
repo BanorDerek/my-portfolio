@@ -234,7 +234,7 @@ export const projects = [
   type: 'completed',
   slug: 'accesstech-academy',
   title: 'AccessTech Academy - An Accessible E-Learning Platform',
-  image: new URL('/src/assets/projectimage/atacad1.png', import.meta.url).href,
+  image: new URL('/src/assets/projectimage/project3.1.png', import.meta.url).href,
   stack: { 
     frontend: ['React.js', 'React Router DOM', 'CSS3', 'Context API'], 
     backend: ['Node.js', 'Express.js'], 

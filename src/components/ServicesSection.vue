@@ -13,6 +13,11 @@ const services = ref([
     description: 'Using React Native, I create beautiful, cross-platform mobile apps for both iOS and Android that deliver a smooth, native-like user experience.'
   },
   {
+    emoji: '☁️',
+    title: 'Cloud Architecture & DevOps',
+    description: 'I design and implement scalable cloud infrastructure on AWS. From deploying web applications to setting up CI/CD pipelines, I ensure your applications are reliable, secure, and highly available.'
+  },
+  {
     emoji: '♿',
     title: 'Accessibility Audits',
     description: 'I ensure your website is inclusive and usable by everyone by auditing against WCAG standards, improving SEO and expanding your user base.'
@@ -50,14 +55,11 @@ const services = ref([
 .services-section {
   width: 90%;
   max-width: 1200px;
-  /* This section is a container, so its background should be transparent */
-  /* to show the main body background (var(--bg-color)) */
   background-color: transparent;
-  padding: 60px 0; /* Adjust padding as it's not a card */
+  padding: 60px 0;
   border-radius: 12px;
 }
 
-/* --- Section Title --- */
 .section-title {
   text-align: center;
   margin-bottom: 50px;
@@ -79,7 +81,6 @@ const services = ref([
   transition: color 0.3s ease;
 }
 
-/* --- Services Grid --- */
 .services-container {
   display: flex;
   justify-content: center; 
@@ -102,8 +103,8 @@ const services = ref([
 
 .service-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 30px var(--shadow-color); /* Use shadow variable */
-  border-color: var(--accent-color); /* Use accent color on hover */
+  box-shadow: 0 15px 30px var(--shadow-color);
+  border-color: var(--accent-color);
 }
 
 .service-emoji {
