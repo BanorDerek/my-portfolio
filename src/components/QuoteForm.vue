@@ -332,44 +332,6 @@ const downloadQuoteAsHTML = () => {
         <p>Generated on: ${new Date().toLocaleDateString()}</p>
         <p>Quote ID: WEB-${Date.now().toString().slice(-8)}</p>
       </div>
-      <!-- Mobile App Notice (NEW SECTION) -->
-<div class="form-section highlight-section">
-  <h2>📱 Need a Mobile App?</h2>
-  <div class="mobile-app-notice">
-    <div class="notice-icon">📲</div>
-    <div class="notice-content">
-      <h3>Mobile App Development</h3>
-      <p class="notice-main">Mobile applications require a custom approach based on your specific needs, features, and platform requirements.</p>
-      <div class="notice-features">
-        <div class="feature-item">
-          <span class="feature-icon">✓</span>
-          <span>iOS & Android (React Native)</span>
-        </div>
-        <div class="feature-item">
-          <span class="feature-icon">✓</span>
-          <span>Native performance</span>
-        </div>
-        <div class="feature-item">
-          <span class="feature-icon">✓</span>
-          <span>App Store deployment</span>
-        </div>
-        <div class="feature-item">
-          <span class="feature-icon">✓</span>
-          <span>Push notifications</span>
-        </div>
-      </div>
-      <div class="notice-cta">
-        <p class="cta-text">📞 <strong>Contact me to discuss your mobile app idea!</strong></p>
-        <button 
-          class="contact-mobile-btn"
-          @click="handleShowPhoneNumber"
-        >
-          Discuss Mobile App
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
       <div class="section">
         <h2 class="section-title">Customer Information</h2>
         <p><strong>Name:</strong> ${formData.customerName || 'Not provided'}</p>
@@ -430,7 +392,44 @@ const handleShowPhoneNumber = () => {
 <template>
   <div class="quote-form-container">
     <h1>Website Development Quote Calculator</h1>
-    
+          <!-- Mobile App Notice (NEW SECTION) -->
+<div class="form-section highlight-section">
+  <h2>📱 Need a Mobile App?</h2>
+  <div class="mobile-app-notice">
+    <div class="notice-icon">📲</div>
+    <div class="notice-content">
+      <h3>Mobile App Development</h3>
+      <p class="notice-main">Mobile applications require a custom approach based on your specific needs, features, and platform requirements.</p>
+      <div class="notice-features">
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <span>iOS & Android (React Native)</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <span>Native performance</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <span>App Store deployment</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">✓</span>
+          <span>Push notifications</span>
+        </div>
+      </div>
+      <div class="notice-cta">
+        <p class="cta-text">📞 <strong>Contact me to discuss your mobile app idea!</strong></p>
+        <button 
+          class="contact-mobile-btn"
+          @click="handleShowPhoneNumber"
+        >
+          Discuss Mobile App
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
     <div class="quote-form">
       <!-- Customer Information -->
       <div class="form-section">
