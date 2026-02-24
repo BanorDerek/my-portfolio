@@ -392,7 +392,7 @@ const handleShowPhoneNumber = () => {
 <template>
   <div class="quote-form-container">
     <h1>Website Development Quote Calculator</h1>
-          <!-- Mobile App Notice (NEW SECTION) -->
+<!-- Mobile App Notice (NEW SECTION) -->
 <div class="form-section highlight-section">
   <h2>📱 Need a Mobile App?</h2>
   <div class="mobile-app-notice">
@@ -426,6 +426,15 @@ const handleShowPhoneNumber = () => {
         >
           Discuss Mobile App
         </button>
+        
+        <!-- ADD THIS PHONE NUMBER DISPLAY SECTION -->
+        <div v-if="showPhoneNumber" class="mobile-phone-display">
+          <div class="phone-number-mobile">
+            <span class="phone-icon-small">📞</span>
+            <strong>+234 907 896 4773</strong>
+          </div>
+          <p class="phone-hours-small">Available: Mon-Fri 8AM-6PM, Sat 10AM-4PM</p>
+        </div>
       </div>
     </div>
   </div>
