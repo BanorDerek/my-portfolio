@@ -25,11 +25,20 @@ const navLinks = [
   { text: 'Contact', href: '#contact' },
 ];
 
+// Add a separate array for the special Quote link that goes to a different page
+const quoteLink = { text: 'Get Quote', href: '/quote', isRoute: true };
+
 const getLinkUrl = (href) => {
   if (route.path === '/') {
     return href;
   }
   return `/${href}`;
+};
+
+// Handle navigation for the Quote link (it's a route, not a hash)
+const handleQuoteClick = () => {
+  closeMenu();
+  // The router-link will handle the navigation automatically
 };
 </script>
 
@@ -44,10 +53,20 @@ const getLinkUrl = (href) => {
     </button>
 
     <ul class="nav-links" :class="{ 'is-open': isMenuOpen }">
+      <!-- Regular nav links with hash anchors -->
       <li v-for="link in navLinks" :key="link.text">
         <a :href="getLinkUrl(link.href)" @click="closeMenu">{{ link.text }}</a>
       </li>
-      <!-- Add the theme toggle as the last item in the list -->
+      
+      <!-- Special Quote link that uses router-link -->
+      <li>
+        <router-link to="/quote" @click="closeMenu" class="quote-link">
+          Get Quote
+          <span class="quote-badge">💰</span>
+        </router-link>
+      </li>
+      
+      <!-- Theme toggle as the last item -->
       <li class="theme-toggle-container">
         <ThemeToggle />
       </li>
@@ -102,6 +121,28 @@ const getLinkUrl = (href) => {
 
 .nav-links a:hover {
   color: var(--accent-color-hover);
+}
+
+/* Special styling for the Quote link */
+.quote-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-color-hover));
+  color: white !important;
+  padding: 8px 16px;
+  border-radius: 25px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.quote-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  color: white !important;
+}
+
+.quote-badge {
+  font-size: 1.1rem;
 }
 
 .theme-toggle-container {
@@ -167,6 +208,11 @@ const getLinkUrl = (href) => {
   
   .hamburger-menu {
     display: block;
+  }
+  
+  /* Adjust quote link for mobile */
+  .quote-link {
+    padding: 10px 20px;
   }
 }
 </style>

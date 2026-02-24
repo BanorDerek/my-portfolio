@@ -4,42 +4,163 @@
 // This ensures that Vite processes the images correctly during the build step.
 
 export const projects = [
-  // --- COMPLETED PROJECTS ---
+  // --- NEW PROJECT: Bluetidy (Latest Project - Make this first) ---
+  {
+    type: 'completed',
+    slug: 'bluetidy',
+    title: 'Bluetidy - Cleaning Operations Platform for Property Hosts',
+    image: new URL('/src/assets/projectimage/bluetidy1.png', import.meta.url).href, // You'll need to add this image
+    stack: {
+      frontend: ['React Native', 'TypeScript', 'React Navigation'],
+      backend: ['Node.js', 'Express.js'],
+      database: ['PostgreSQL'],
+      cloud: ['AWS S3'],
+      auth: ['JWT', 'Role-based Access']
+    },
+    description: 'A mobile platform that streamlines cleaning operations for property hosts, enabling scheduling, bidding, and verification through photo-based checklists.',
+    liveLink: 'https://www.linkedin.com/posts/derekbanor_bluetidy-proptech-cleantech-activity-7413837530820857857-1-lz',
+    githubLink: '#',
+    galleryImages: [
+      new URL('/src/assets/projectimage/bluetidy1.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/bluetidy2.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/bluetidy3.png', import.meta.url).href,
+    ],
+    fullDescription: [
+      { type: 'paragraph', content: "Bluetidy is a mobile platform that transforms cleaning operations into a smooth, automated system, creating a seamless connection between property hosts and cleaners. With Bluetidy, property hosts can schedule cleaning jobs, list them for cleaners to bid on, select their preferred cleaner, negotiate bids, and finalize schedules upon mutual acceptance." },
+      { type: 'paragraph', content: "The platform features three core checklists that ensure precision and accountability: a Cleaning Checklist with photo verification, a Property Condition Checklist for pre- and post-stay logging, and an Inventory Checklist that tracks consumables and sends restock alerts." },
+      { type: 'heading', content: 'Key Technical Features' },
+      { type: 'list', items: [
+        'Real-time chat with 5-second polling implementation',
+        'Photo-verified checklists for cleaning, property condition, and inventory with AWS S3 integration',
+        'Secure role-based access system with JWT (Host/Cleaner/Admin)',
+        'Bidding system with counter-offer capabilities',
+        'Multi-property management with different cleaners assigned to different properties',
+        'i18n localization support'
+      ]},
+      { type: 'heading', content: 'Our Three Core Checklists' },
+      { type: 'list', items: [
+        'Cleaning Checklist – Guides cleaners through required tasks with photo verification to confirm completion',
+        'Property Condition Checklist – Logs pre- and post-stay conditions for maintenance, security, and transparency',
+        'Inventory Checklist – Tracks consumable and non-consumable items, sending restock alerts when supplies run low'
+      ]}
+    ],
+    codeSnippets: [
+      { title: "Real-time Chat with Polling", language: "javascript", code: `// Polling implementation for real-time chat\nconst pollMessages = async () => {\n  try {\n    const response = await fetch(\n      \`/api/messages?roomId=\${roomId}&lastMessageId=\${lastMessageId}\`,\n      { headers: { Authorization: \`Bearer \${token}\` } }\n    );\n    const newMessages = await response.json();\n    \n    if (newMessages.length > 0) {\n      setMessages(prev => [...prev, ...newMessages]);\n      setLastMessageId(newMessages[newMessages.length - 1].id);\n    }\n  } catch (error) {\n    console.error('Polling error:', error);\n  }\n};\n\n// Setup polling interval\nuseEffect(() => {\n  const interval = setInterval(pollMessages, 5000); // Poll every 5 seconds\n  return () => clearInterval(interval);\n}, [roomId]);` },
+      { title: "Photo-Verified Checklist with AWS S3 Upload", language: "javascript", code: `// Image upload to AWS S3\nconst uploadImage = async (imageUri, checklistId) => {\n  const formData = new FormData();\n  formData.append('image', {\n    uri: imageUri,\n    type: 'image/jpeg',\n    name: \`checklist-\${Date.now()}.jpg\`\n  });\n  formData.append('checklistId', checklistId);\n\n  try {\n    const response = await fetch('/api/upload-checklist-image', {\n      method: 'POST',\n      headers: {\n        'Authorization': \`Bearer \${token}\`,\n        'Content-Type': 'multipart/form-data'\n      },\n      body: formData\n    });\n    \n    const data = await response.json();\n    return data.imageUrl;\n  } catch (error) {\n    console.error('Upload failed:', error);\n    throw error;\n  }\n};` }
+    ]
+  },
+
+  // --- EXISTING PROJECT: Give Tech to the Blind (Now standalone) ---
+  {
+    type: 'completed',
+    slug: 'give-tech-to-the-blind',
+    title: 'Give Tech to the Blind - Social Impact Platform',
+    image: new URL('/src/assets/projectimage/givetech1.png', import.meta.url).href, // You'll need to add this image
+    stack: {
+      frontend: ['React.js', 'Tailwind CSS', 'React Router DOM'],
+      backend: ['Node.js', 'Express.js'],
+      database: ['PostgreSQL'],
+      cloud: ['AWS S3'],
+      auth: ['bcrypt', 'Passport.js', 'Google OAuth'],
+      payments: ['Paystack']
+    },
+    description: 'A platform connecting donors with visually impaired recipients to provide assistive technology, exhibited at GITEX NIGERIA 2025.',
+    liveLink: '#', // Add live link when available
+    githubLink: '#',
+    galleryImages: [
+      new URL('/src/assets/projectimage/givetech1.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/givetech2.png', import.meta.url).href,
+      new URL('/src/assets/projectimage/givetech3.png', import.meta.url).href,
+    ],
+    fullDescription: [
+      { type: 'paragraph', content: "Give Tech to the Blind is a platform that connects donors with visually impaired recipients to provide essential assistive technology. Since its soft launch, the platform has already connected donors with recipients, with the first batch of tech requests being fulfilled." },
+      { type: 'paragraph', content: "The project was exhibited at GITEX NIGERIA - The Largest Tech & Startup Event in West Africa 2025 in Lagos on the 3rd-4th of September for its first public showcase. It was an amazing experience showcasing technology for social good and accessibility." },
+      { type: 'heading', content: 'Key Technical Features' },
+      { type: 'list', items: [
+        'Smart Login/Register: A single page that routes donors or recipients to their personalized dashboards securely',
+        'Secure Access: Complete email/password authentication (bcrypt, email verification, forgot password) plus Google OAuth for easy login',
+        'Recipient Verification (KYC): Multi-step profiles for recipients to share details and securely upload documents to AWS S3',
+        'Admin Control: Comprehensive panel to manage campaigns (approve, edit, feature), products (with S3 image uploads), and admin roles',
+        'Donation System: Secure checkout via Paystack, automated notifications, and a "My Gifts" page for donors to track impact'
+      ]},
+      { type: 'heading', content: 'Tech Stack' },
+      { type: 'list', items: [
+        'Frontend: React.js, Tailwind CSS, React Router DOM',
+        'Backend: Node.js, Express.js',
+        'Database: PostgreSQL',
+        'Cloud: AWS S3',
+        'Payments: Paystack',
+        'Auth: bcrypt, Passport.js, Google OAuth'
+      ]}
+    ],
+    codeSnippets: [
+      { title: "Smart Login/Register Routing", language: "javascript", code: `// Single page that routes users based on role\nconst handleLogin = async (e) => {\n  e.preventDefault();\n  try {\n    const response = await fetch('/api/auth/login', {\n      method: 'POST',\n      headers: { 'Content-Type': 'application/json' },\n      body: JSON.stringify({ email, password })\n    });\n    \n    const data = await response.json();\n    \n    if (data.success) {\n      // Route to appropriate dashboard based on role\n      if (data.user.role === 'donor') {\n        navigate('/donor-dashboard');\n      } else if (data.user.role === 'recipient') {\n        navigate('/recipient-dashboard');\n      } else if (data.user.role === 'admin') {\n        navigate('/admin-dashboard');\n      }\n    }\n  } catch (error) {\n    console.error('Login error:', error);\n  }\n};` },
+      { title: "KYC Document Upload to AWS S3", language: "javascript", code: `// Multi-step KYC verification with document upload\nconst uploadKycDocuments = async (formData) => {\n  try {\n    // Upload documents to S3\n    const documentUrls = await Promise.all(\n      formData.documents.map(async (doc) => {\n        const uploadData = new FormData();\n        uploadData.append('document', doc);\n        uploadData.append('type', doc.type);\n        \n        const response = await fetch('/api/upload-kyc-document', {\n          method: 'POST',\n          headers: { 'Authorization': \`Bearer \${token}\` },\n          body: uploadData\n        });\n        \n        const { url } = await response.json();\n        return url;\n      })\n    );\n    \n    // Submit KYC data with document URLs\n    const kycResponse = await fetch('/api/recipient/kyc', {\n      method: 'POST',\n      headers: { \n        'Authorization': \`Bearer \${token}\`,\n        'Content-Type': 'application/json'\n      },\n      body: JSON.stringify({\n        ...formData,\n        documentUrls\n      })\n    });\n    \n    return await kycResponse.json();\n  } catch (error) {\n    console.error('KYC submission failed:', error);\n    throw error;\n  }\n};` }
+    ]
+  },
+
+  // --- NEW PROJECT: AA Design (Interior Decor Website) ---
+  {
+    type: 'completed',
+    slug: 'aa-design',
+    title: 'AA Design - Interior Decor Website',
+    image: new URL('/src/assets/projectimage/aadesign1.png', import.meta.url).href, // You'll need to add this image
+    stack: {
+      frontend: ['React', 'JavaScript (ES6+)'],
+    },
+    description: 'A static React website for an interior decor client, showcasing their portfolio and design services.',
+    liveLink: '#', // Add when available
+    githubLink: '#',
+    galleryImages: [
+      new URL('/src/assets/projectimage/aadesign1.png', import.meta.url).href,
+    ],
+    fullDescription: [
+      { type: 'paragraph', content: "AA Design is a static React website built for an interior decor client to showcase their portfolio and design services. The website presents their work in a clean, visually appealing format that highlights their design aesthetic and project portfolio." },
+      { type: 'heading', content: 'Key Features' },
+      { type: 'list', items: [
+        'Responsive design for all devices',
+        'Portfolio gallery showcasing interior design projects',
+        'Service listings and contact information',
+        'Clean, modern UI that reflects the client\'s design philosophy'
+      ]}
+    ],
+    codeSnippets: [
+      { title: "Portfolio Gallery Component", language: "javascript", code: `// Gallery component for showcasing design work\nconst PortfolioGallery = () => {\n  const [activeFilter, setActiveFilter] = useState('all');\n  \n  const filters = ['all', 'residential', 'commercial', 'office'];\n  \n  const filteredProjects = projects.filter(project => \n    activeFilter === 'all' || project.category === activeFilter\n  );\n  \n  return (\n    <div className="portfolio-gallery">\n      <div className="filter-buttons">\n        {filters.map(filter => (\n          <button\n            key={filter}\n            className={activeFilter === filter ? 'active' : ''}\n            onClick={() => setActiveFilter(filter)}\n          >\n            {filter.charAt(0).toUpperCase() + filter.slice(1)}\n          </button>\n        ))}\n      </div>\n      \n      <div className="gallery-grid">\n        {filteredProjects.map(project => (\n          <div key={project.id} className="gallery-item">\n            <img src={project.image} alt={project.title} />\n            <div className="overlay">\n              <h3>{project.title}</h3>\n              <p>{project.description}</p>\n            </div>\n          </div>\n        ))}\n      </div>\n    </div>\n  );\n};` }
+    ]
+  },
+
+  // --- EXISTING PROJECT: Developer Portfolio ---
   {
     type: 'completed',
     slug: 'developer-portfolio',
     title: 'Personal Developer Portfolio',
     image: new URL('/src/assets/projectimage/project6.png', import.meta.url).href,
-
     stack: {
       frontend: ['Vue 3', 'Vite', 'Vue Router', 'JavaScript (ES6+)'],
       focus: ['SPA Architecture', 'Responsiveness', 'Accessibility']
     },
-
     description: 'A dynamic Single Page Application built with Vue 3 and Vite to serve as a comprehensive showcase of my projects and technical skills.',
-    
     liveLink: '#',
     githubLink: '#',
-
     galleryImages: [
       new URL('/src/assets/projectimage/project6.1.png', import.meta.url).href,
       new URL('/src/assets/projectimage/project6.2.png', import.meta.url).href,
       new URL('/src/assets/projectimage/project6.3.png', import.meta.url).href,
     ],
-
     fullDescription: [
       { type: 'paragraph', content: "This portfolio is a Single Page Application (SPA) built from the ground up using Vue 3 and Vite. It serves as a dynamic and maintainable platform to showcase my work, providing detailed case studies for each project." },
       { type: 'paragraph', content: "The architecture is centered around a single data source (`projects.js`) that populates all project-related content, from the main grid to the detailed breakdown pages. This approach makes the site easy to update and scale. It uses Vue Router for seamless navigation and demonstrates a strong focus on modern UI/UX principles, including responsiveness and accessibility." },
       { type: 'heading', content: 'Key Technical Features' },
       { type: 'list', items: ['Component-Based Architecture: Built with reusable Vue 3 components using the modern <script setup> syntax for clean and efficient code.', 'Data-Driven Rendering: Project listings and detail pages are dynamically generated from a centralized JavaScript object, separating content from presentation.', 'Smart Routing: The navigation bar intelligently constructs URLs, ensuring hash links for smooth scrolling on the homepage and full path links when on other pages.', 'Accessibility Enhancements: Implements `aria-hidden` to conceal decorative animations and provides a screen-reader-only summary of skills for an inclusive user experience.'] }
     ],
-
     codeSnippets: [
       { title: "Component Logic: 'Smart' Navigation Links", language: "javascript", code: `// From Navbar.vue\nimport { useRoute } from 'vue-router';\nconst route = useRoute();\n\n// This function generates the correct URL for each navigation link.\nconst getLinkUrl = (href) => {\n  // If we are on the homepage ('/'), use a simple hash link for smooth scrolling.\n  if (route.path === '/') {\n    return href;\n  }\n  // If we are on any other page, prepend '/' to go back to the homepage first,\n  // then scroll to the correct section.\n  return \`/\${href}\`;\n};` },
       { title: "Accessibility: Hiding Visuals & Providing an SR-Only Summary", language: "html", code: `<!-- From Hero.vue -->\n\n<!-- 1. The visual, animated elements are hidden from screen readers -->\n<div class="typewriter-container" aria-hidden="true">\n  <span class="typed-text">{{ displayedText }}</span>\n  <span class="cursor"></span>\n</div>\n<div class="skills-list" aria-hidden="true">\n  <!-- ... animated skill bars ... -->\n</div>\n\n<!-- 2. A static, hidden list provides a clear summary for screen readers -->\n<div class="sr-only">\n  <h3>My Skills and Proficiency Levels:</h3>\n  <ul>\n    <li v-for="lang in languages" :key="lang.name + '-sr'">\n      {{ lang.name }}, proficiency level: {{ lang.label }}.\n    </li>\n  </ul>\n</div>` },
       { title: "Data-Driven UI: Rendering Structured Content", language: "html", code: `<!-- From ProjectDetails.vue -->\n<!-- This loop reads the structured data and builds the correct HTML tags -->\n<div v-for="(block, index) in project.fullDescription" :key="index">\n  <p v-if="block.type === 'paragraph'">{{ block.content }}</p>\n  \n  <h3 v-if="block.type === 'heading'">{{ block.content }}</h3>\n  \n  <ul v-if="block.type === 'list'">\n    <li v-for="(item, i) in block.items" :key="i">{{ item }}</li>\n  </ul>\n</div>` }
     ]
   },
+
+  // --- EXISTING PROJECT: Chatbot Implementation ---
   {
     type: 'completed',
     slug: 'chatbot-implementation',
@@ -60,13 +181,15 @@ export const projects = [
       { language: 'javascript', title: 'Node.js API Endpoint for Chat', code: `router.post('/chat', async (req, res) => {\n  const { message } = req.body;\n  try {\n    const completion = await openai.chat.completions.create({\n      model: "gpt-3.5-turbo",\n      messages: [{ role: "user", content: message }],\n    });\n    res.json({ reply: completion.choices[0].message.content });\n  } catch (error) {\n    console.error('Error with OpenAI API:', error);\n    res.status(500).send('Error communicating with AI');\n  }\n});` }
     ]
   },
+
+  // --- EXISTING PROJECT: Accesstech Store (Updated description) ---
   {
     type: 'completed',
-    slug: 'givetechtotheblind',
-    title: 'Give Tech to the Blind (Social E-commerce Platform)',
+    slug: 'accesstechstore',
+    title: 'Accesstech Store - Assistive Technology E-commerce',
     image: new URL('/src/assets/projectimage/project2.png', import.meta.url).href,
     stack: { frontend: ['HTML5', 'CSS3', 'Vanilla JavaScript (ES6+)'], backend: ['PHP'], database: ['MySQL'], apis_libraries: ['Paystack API', 'IziToast.js'] },
-    description: 'A full-stack social enterprise e-commerce platform enabling users to buy or gift assistive technology.',
+    description: 'A full-stack e-commerce platform enabling users to purchase assistive technology products.',
     liveLink: 'https://accesstechstore.com/',
     githubLink: '#',
     galleryImages: [
@@ -80,8 +203,8 @@ export const projects = [
       new URL('/src/assets/projectimage/project2.8.png', import.meta.url).href,
     ],
     fullDescription: [
-      { type: 'paragraph', content: `"Give Tech to the Blind" is a full-stack e-commerce platform built with PHP, MySQL, and vanilla JavaScript. It's designed with a unique social enterprise model that allows users to either purchase assistive technology for themselves or directly gift these life-changing devices to visually impaired individuals in need.` },
-      { type: 'paragraph', content: `The platform's core is its dual-purpose functionality, which intelligently adapts the user experience. For example, it disables delivery options and fees when a user's entire cart consists of gifted items. This required robust backend logic to manage session data and enforce business rules securely.` },
+      { type: 'paragraph', content: `"Accesstech Store" is a full-stack e-commerce platform built with PHP, MySQL, and vanilla JavaScript. It provides a seamless shopping experience for assistive technology products.` },
+      { type: 'paragraph', content: `The platform features a dynamic product catalog, AJAX-powered cart updates, and secure payment integration with Paystack.` },
       { type: 'heading', content: 'Key Technical Features' },
       { type: 'list', items: ['Dynamic Product Catalog: All product information is dynamically generated from a MySQL database.', 'AJAX-Powered Cart: Provides a smooth user experience by updating the cart without page reloads using the JavaScript Fetch API.', 'Secure Payment Integration: Fully integrated with the Paystack API for secure, real-time payment processing.', 'Session Management & Security: Implements user authentication, persistent carts, and protection against common vulnerabilities like SQL Injection and CSRF.'] }
     ],
@@ -91,6 +214,8 @@ export const projects = [
       { title: "Frontend: Asynchronous Cart Updates (AJAX)", language: "javascript", code: `function updateQuantity(productId, newQuantity) {\n    const formData = new FormData();\n    formData.append('update_quantity', true);\n    formData.append('product_id', productId);\n    formData.append('quantity', newQuantity);\n\n    // Disable buttons to prevent multiple clicks\n    const buttons = document.querySelectorAll(\`#product-\${productId}-buttons button\`);\n    buttons.forEach(btn => btn.disabled = true);\n\n    fetch(window.location.pathname, {\n        method: 'POST',\n        body: formData\n    })\n    .then(response => response.json())\n    .then(data => {\n        if (data.status === 'success') {\n            iziToast.success({ message: 'Quantity updated.' });\n            setTimeout(() => location.reload(), 1000); \n        } else {\n            iziToast.error({ message: data.message });\n        }\n    })\n    .finally(() => {\n        // Re-enable buttons after request completes\n        buttons.forEach(btn => btn.disabled = false);\n    });\n}` }
     ]
   },
+
+  // --- EXISTING PROJECT: AccessTech Academy ---
   {
     type: 'completed',
     slug: 'accesstech-academy',
@@ -121,6 +246,8 @@ export const projects = [
       { title: "Backend: Course Access Control (Authorization)", language: "php", code: `// --- (After user is logged in and course_id is validated) ---\n\n// 1. Fetch course details to check if it requires payment\n$sql_course = "SELECT id, is_paid FROM courses WHERE id = ? LIMIT 1";\n$stmt_course = $conn->prepare($sql_course);\n$stmt_course->bind_param("i", $course_id);\n$stmt_course->execute();\n$course = $stmt_course->get_result()->fetch_assoc();\n$stmt_course->close();\n\nif (!$course) { /* ... handle course not found ... */ }\n\n$is_paid_course = (bool)$course['is_paid'];\n$has_access = false; // Assume no access by default\n\n// 2. Determine authorization\nif (!$is_paid_course) {\n    // Grant access for free courses\n    $has_access = true;\n} else {\n    // For paid courses, check the user_enrollments table\n    $sql_enroll_check = "SELECT 1 FROM user_enrollments WHERE user_id = ? AND course_id = ? LIMIT 1";\n    $stmt_enroll_check = $conn->prepare($sql_enroll_check);\n    $stmt_enroll_check->bind_param("ii", $user_id, $course_id);\n    $stmt_enroll_check->execute();\n    if ($stmt_enroll_check->get_result()->num_rows > 0) {\n        $has_access = true; // Grant access if enrolled\n    }\n    $stmt_enroll_check->close();\n}\n\n// 3. Enforce the decision\nif (!$has_access) {\n    $_SESSION['error_message'] = "You are not enrolled in this course.";\n    header('Location: /courses/course_page.php?course_id=' . $course_id);\n    exit;\n}\n\n// --- If code execution continues, the user is authorized to view the lesson ---` }
     ]
   },
+
+  // --- EXISTING PROJECT: Visitor & Item Management System ---
   {
     type: 'completed',
     slug: 'visitors-signin-system',
@@ -150,6 +277,8 @@ export const projects = [
       { title: "Database: Conditional Query for Filtered Reporting", language: "php", code: `// --- A-Z Filtering Logic ---\n$filter_char = null;\n$filter_param = '';\nif (isset($_GET['filter']) && preg_match('/^[A-Z]$/', $_GET['filter'])) {\n    $filter_char = $_GET['filter'];\n    $filter_param = $filter_char . '%'; // Prepare for LIKE clause\n}\n\n// Base SQL query\n$sql_visitors = "SELECT v.name, vi.sign_in_time, vi.sign_out_time\n                 FROM visitors v JOIN visits vi ON v.visitor_id = vi.visitor_id\n                 WHERE vi.sign_out_time IS NOT NULL";\n\n// Conditionally add the filter to the SQL query\nif ($filter_char) {\n    $sql_visitors .= " AND v.name LIKE ?";\n}\n\n$sql_visitors .= " ORDER BY v.name ASC";\n\n$stmt_visitors = $conn->prepare($sql_visitors);\n\nif ($stmt_visitors) {\n    // Bind the parameter ONLY if the filter is active\n    if ($filter_char) {\n        $stmt_visitors->bind_param("s", $filter_param);\n    }\n    $stmt_visitors->execute();\n    $result = $stmt_visitors->get_result();\n    // ... fetch and display results ...\n}` }
     ]
   },
+
+  // --- EXISTING PROJECT: BanorInc Supply Chain ---
   {
     type: 'completed',
     slug: 'banorinc-supply-chain',
@@ -191,12 +320,5 @@ export const projects = [
     title: 'Confidential e-Commerce Site',
     stack: { frontend: ['React'], backend: ['Node.js'], cloud: ['Azure'] },
     description: 'Another exciting project in the pipeline, focusing on a scalable and modern e-commerce solution.'
-  },
-  {
-    type: 'pending',
-    slug: 'confidential-mobile-app-2',
-    title: 'Confidential Mobile App',
-    stack: { frontend: ['React Native'], backend: ['Node.js'], cloud: ['AWS'] },
-    description: 'Working on a new mobile application set to launch soon. Stay tuned for more information!'
   }
 ];

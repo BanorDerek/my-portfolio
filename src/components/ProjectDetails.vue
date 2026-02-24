@@ -33,7 +33,7 @@ onMounted(() => {
       <header class="project-header">
         <h1>{{ project.title }}</h1>
         <div class="project-links">
-          <a v-if="project.liveLink && project.liveLink !== '#'" :href="project.liveLink" target="_blank" class="btn btn-primary">View Live Site</a>
+          <a v-if="project.liveLink && project.liveLink !== '#'" :href="project.liveLink" target="_blank" class="btn btn-primary">View Site</a>
           <a v-if="project.githubLink && project.githubLink !== '#'" :href="project.githubLink" target="_blank" class="btn btn-secondary">View on GitHub</a>
         </div>
       </header>

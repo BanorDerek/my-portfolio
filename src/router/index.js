@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import MainPage from '../components/MainPage.vue';
 import ProjectDetails from '../components/ProjectDetails.vue';
+import QuoteForm from '../components/QuoteForm.vue'; // Add this import
 
 const routes = [
   {
@@ -14,6 +15,11 @@ const routes = [
     component: ProjectDetails,
     props: true,
   },
+  {
+    path: '/quote', // Add this route
+    name: 'Quote',
+    component: QuoteForm,
+  },
 ];
 
 const router = createRouter({
@@ -21,7 +27,6 @@ const router = createRouter({
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
-
       return savedPosition;
     }
     
@@ -31,7 +36,6 @@ const router = createRouter({
           resolve({ 
             el: to.hash, 
             behavior: 'smooth',
-            
             top: document.querySelector('header')?.offsetHeight || 100
           });
         }, 100); 
